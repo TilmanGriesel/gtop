@@ -37,12 +37,15 @@ func update_cpu_bars() {
 		data, ok := <- sysmon.CpuChannel
 		if(ok) {
 			cpu_bars[0].ValueChannel <- int(data[0])
-			// TODO [TG] Upgrade or change psutil lib
-			// Possible if gopsutil is kind enough to
-			// support multi cpu on windows or I find a different lib
-			//for i := 0; i < len(cpu_bars); i++ {
-			//	cpu_bars[i].ValueChannel <- data[i]
-			//}
+
+			// TODO: shirou/gopsutil is utilizing WMI querys
+			// and supports no cpu load for each core on windows
+			// ~ BUMMER
+
+			/*
+			for i := 0; i < len(cpu_bars); i++ {
+				cpu_bars[i].ValueChannel <- data[i]
+			}*/
 
 		}
 	}
